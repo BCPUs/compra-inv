@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de Compras</title>
+</head>
+<body>
+    <header>
+        <h1>Módulo de Compras</h1>
+        <nav>
+            <a href="{% url 'compras_listado_solicitudes' %}">Solicitudes</a>
+            <a href="{% url 'compras_bandeja_pendientes' %}">Pendientes de revisión</a>
+            <a href="{% url 'compras_listado_ordenes' %}">Órdenes de compra</a>
+            <a href="{% url 'compras_listado_proveedores' %}">Proveedores</a>
+            <a href="{% url 'compras_ordenes_pendientes_recepcion' %}">Recepción de mercancía</a>
+            <a href="{% url 'compras_buscar_inventario' %}">Consultar inventario</a>
+            <a href="{% url 'compras_historial_auditoria' %}">Auditoría</a>
+        </nav>
+        <hr>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+</html>

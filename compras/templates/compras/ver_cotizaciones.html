@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Cotizaciones - {{ solicitud_cotizacion.solicitud_compra.codigo_solicitud }}</h2>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Proveedor</th>
+        <th>Precio unitario</th>
+        <th>Tiempo entrega (días)</th>
+        <th>Vigencia</th>
+        <th>Estado</th>
+        <th>Acción</th>
+    </tr>
+    {% for c in cotizaciones %}
+    <tr>
+        <td>{{ c.proveedor.nombre }}</td>
+        <td>${{ c.precio_unitario }}</td>
+        <td>{{ c.tiempo_entrega_dias }}</td>
+        <td>{{ c.vigencia }}</td>
+        <td>{{ c.estado }}</td>
+        <td>
+            {% if c.estado == "PENDIENTE" %}
+                <a href="{% url 'compras_seleccionar_ganadora' c.pk %}">Seleccionar como ganadora</a>
+            {% else %}
+                -
+            {% endif %}
+        </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="6">Todavía no hay cotizaciones registradas.</td></tr>
+    {% endfor %}
+</table>
+
+<p><a href="{% url 'compras_agregar_proveedor_cotizacion' solicitud_cotizacion.pk %}">+ Agregar otro proveedor a esta cotización</a></p>
+
+<h3>Registrar cotización de un proveedor</h3>
+<form method="post">
+    {% csrf_token %}
+    {{ cot_form.as_p }}
+    <button type="submit">Guardar cotización</button>
+</form>
+{% endblock %}

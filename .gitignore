@@ -1,0 +1,22 @@
+# Entorno virtual
+venv/
+env/
+
+# Python compilado
+__pycache__/
+*.pyc
+*.pyo
+
+# Base de datos local (cada integrante tiene la suya de pruebas)
+db.sqlite3
+
+# Editor
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Archivos de Django
+staticfiles/
+media/

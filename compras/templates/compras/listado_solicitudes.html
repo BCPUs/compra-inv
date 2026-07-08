@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Solicitudes de Compra</h2>
+<a href="{% url 'compras_registrar_solicitud' %}">+ Nueva solicitud</a>
+
+<table border="1" cellpadding="5">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Estado</th>
+            <th>Fecha registro</th>
+            <th>Acciones</th> </tr>
+    </thead>
+    <tbody>
+        {% for s in solicitudes %}
+        <tr>
+            <td>{{ s.codigo_solicitud }}</td>
+            <td>{{ s.producto_nombre }} ({{ s.producto_codigo }})</td>
+            <td>{{ s.cantidad_solicitada }}</td>
+            <td>{{ s.estado }}</td>
+            <td>{{ s.fecha_registro }}</td>
+            <td>
+                <a href="{% url 'compras_editar_solicitud' s.pk %}">Editar</a>
+                
+                {% if s.estado == "PENDIENTE" %}
+                    | <a href="{% url 'compras_verificar_stock' s.pk %}">Verificar stock</a>
+                {% endif %}
+                
+                {% if s.estado == "SIN_STOCK" %}
+                    | <a href="{% url 'compras_crear_solicitud_cotizacion' s.pk %}">Cotizar</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">No hay solicitudes de compra registradas.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

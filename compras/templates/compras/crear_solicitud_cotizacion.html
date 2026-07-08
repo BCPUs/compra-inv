@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Solicitar Cotización para {{ solicitud_compra.codigo_solicitud }}</h2>
+<p>Producto: {{ solicitud_compra.producto_nombre }} — Cantidad: {{ solicitud_compra.cantidad_solicitada }}</p>
+
+{% if not form.fields.proveedores.queryset %}
+    <p style="color:red">No hay proveedores registrados todavía. <a href="{% url 'compras_registrar_proveedor' %}">Registra uno primero</a>.</p>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    <label>Proveedores a cotizar:</label><br>
+    {{ form.as_p }}
+    <button type="submit">Enviar solicitud de cotización</button>
+</form>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Orden de Compra {{ orden.numero_orden }}</h2>
+<p>Proveedor: {{ orden.cotizacion_ganadora.proveedor.nombre }}</p>
+<p>Producto: {{ orden.cotizacion_ganadora.solicitud_cotizacion.solicitud_compra.producto_nombre }}</p>
+<p>Cantidad: {{ orden.cotizacion_ganadora.solicitud_cotizacion.solicitud_compra.cantidad_solicitada }}</p>
+<p>Precio unitario: ${{ orden.cotizacion_ganadora.precio_unitario }}</p>
+<p><strong>Costo total: ${{ orden.costo_total }}</strong></p>
+<p>Fecha generada: {{ orden.fecha_generada }}</p>
+<p><a href="{% url 'compras_imprimir_orden' orden.pk %}">Ver versión imprimible</a></p>
+<p><a href="{% url 'compras_exportar_orden_pdf' orden.pk %}">Descargar PDF</a></p>
+{% endblock %}

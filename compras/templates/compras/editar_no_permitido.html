@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>No se puede editar</h2>
+<p>La solicitud {{ solicitud.codigo_solicitud }} ya fue {{ solicitud.estado|lower }} y no puede modificarse.</p>
+<a href="{% url 'compras_listado_solicitudes' %}">Volver al listado</a>
+{% endblock %}

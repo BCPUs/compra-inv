@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Verificar Inventario - Producto {{ codigo }}</h2>
+{% if info.existe %}
+<p>Nombre: {{ info.nombre }}</p>
+<p>Stock disponible actual: <strong>{{ info.stock_disponible }}</strong></p>
+{% else %}
+<p>Producto no encontrado en inventario.</p>
+{% endif %}
+{% endblock %}
