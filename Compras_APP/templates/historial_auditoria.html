@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Historial de Auditoría</h2>
+    <!-- ST-7.5 Consultar historial de auditoría -->
+    <table class="table table-sm table-striped">
+        <thead>
+            <tr>
+                <th>Fecha y Hora</th>
+                <th>Usuario</th>
+                <th>Acción</th>
+                <th>Detalle</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for registro in registros %}
+            <tr>
+                <td>{{ registro.fecha_hora|date:"d/m/Y H:i:s" }}</td>
+                <td>{{ registro.usuario.username }}</td>
+                <td>{{ registro.accion }}</td>
+                <td>{{ registro.detalle }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="text-center">No hay registros en el historial.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

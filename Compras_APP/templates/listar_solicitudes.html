@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Listado de Solicitudes de Compra</h2>
+    <a href="{% url 'registrar_solicitud' %}" class="btn btn-success mb-3">Nueva Solicitud</a>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Usuario</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for solicitud in solicitudes %}
+            <tr>
+                <td>{{ solicitud.codigo }}</td>
+                <td>{{ solicitud.usuario.username }}</td>
+                <td>{{ solicitud.fecha_registro|date:"d/m/Y H:i" }}</td>
+                <td>{{ solicitud.estado }}</td>
+                <td>
+                    {% if solicitud.estado == 'Pendiente' or solicitud.estado == 'En Revision' %}
+                        <a href="{% url 'editar_solicitud' solicitud.pk %}" class="btn btn-sm btn-warning">Editar</a>
+                    {% endif %}
+                    {% if solicitud.estado == 'Aprobada' %}
+                        <a href="{% url 'registrar_solicitud_cotizacion' solicitud.pk %}" class="btn btn-sm btn-primary">Cotizar</a>
+                    {% endif %}
+                    {% if solicitud.estado == 'Cotizada' %}
+                        <a href="{% url 'consultar_cotizaciones' solicitud.solicitudcotizacion.pk %}" class="btn btn-sm btn-info text-white">Ver Cotizaciones</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center">No hay solicitudes registradas.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

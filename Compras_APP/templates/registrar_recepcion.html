@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Registrar Recepción: {{ orden.codigo }}</h2>
+    <!-- ST-6.4 Registrar recepción de productos -->
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">Productos de la Orden</label>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad Solicitada</th>
+                        <th>Cantidad Recibida</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items_solicitud %}
+                    <tr>
+                        <td>{{ item.producto }}</td>
+                        <td>{{ item.cantidad }} {{ item.unidad_medida }}</td>
+                        <td>
+                            <input type="number" name="cant_{{ item.pk }}" value="{{ item.cantidad }}" class="form-control" min="0" required>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="mb-3">
+            <label for="observaciones" class="form-label">Observaciones</label>
+            <textarea name="observaciones" id="observaciones" class="form-control" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Confirmar Recepción</button>
+        <a href="{% url 'listar_ordenes_pendientes' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

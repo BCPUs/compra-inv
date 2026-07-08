@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Órdenes de Compra Generadas</h2>
+    <!-- ST-5.6 Consultar órdenes de compra -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Cotización Ref.</th>
+                <th>Proveedor</th>
+                <th>Costo Total</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for orden in ordenes %}
+            <tr>
+                <td>{{ orden.codigo }}</td>
+                <td>{{ orden.cotizacion.solicitud_cotizacion.solicitud_compra.codigo }}</td>
+                <td>{{ orden.cotizacion.proveedor.nombre }}</td>
+                <td>${{ orden.costo_total }}</td>
+                <td>{{ orden.fecha_generacion|date:"d/m/Y" }}</td>
+                <td>{{ orden.estado }}</td>
+                <td>
+                    <a href="{% url 'imprimir_orden' orden.pk %}" class="btn btn-sm btn-info text-white">Ver/Imprimir</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="text-center">No hay órdenes de compra generadas.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

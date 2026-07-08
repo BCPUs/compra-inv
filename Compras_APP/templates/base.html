@@ -36,27 +36,41 @@
             Dashboard
         </a>
 
-        <a href="#">
+        <a href="{% url 'listar_solicitudes' %}">
             <i class="bi bi-cart-check"></i>
-            Compras 
+            Solicitudes
         </a>
 
-        <a href="#">
+        <a href="{% url 'bandeja_pendientes' %}">
+            <i class="bi bi-check-circle"></i>
+            Aprobaciones
+        </a>
+
+        <a href="{% url 'listar_proveedores' %}">
             <i class="bi bi-truck"></i>
             Proveedores
         </a>
 
-        <a href="#">
-            <i class="bi bi-file-earmark-bar-graph"></i>
-            Reportes
+        <a href="{% url 'listar_ordenes' %}">
+            <i class="bi bi-receipt"></i>
+            Órdenes de Compra
+        </a>
+
+        <a href="{% url 'listar_ordenes_pendientes' %}">
+            <i class="bi bi-box-seam"></i>
+            Recepciones
         </a>
 
         {% if request.user.groups.all.0.name == "Administrador" %}
-<a href="{% url 'usuarios' %}">
-    <i class="bi bi-people"></i>
-    Usuarios
-</a>
-{% endif %}
+        <a href="{% url 'usuarios' %}">
+            <i class="bi bi-people"></i>
+            Usuarios
+        </a>
+        <a href="{% url 'historial_auditoria' %}">
+            <i class="bi bi-shield-lock"></i>
+            Auditoría
+        </a>
+        {% endif %}
 
     </aside>
 

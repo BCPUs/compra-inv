@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Bandeja de Solicitudes Pendientes</h2>
+    <!-- ST-3.4 Crear bandeja de solicitudes pendientes -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Usuario</th>
+                <th>Fecha</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for solicitud in solicitudes %}
+            <tr>
+                <td>{{ solicitud.codigo }}</td>
+                <td>{{ solicitud.usuario.username }}</td>
+                <td>{{ solicitud.fecha_registro|date:"d/m/Y H:i" }}</td>
+                <td>
+                    <a href="{% url 'aprobar_solicitud' solicitud.pk %}" class="btn btn-sm btn-success">Aprobar</a>
+                    <a href="{% url 'rechazar_solicitud' solicitud.pk %}" class="btn btn-sm btn-danger">Rechazar</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="text-center">No hay solicitudes pendientes de revisión.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

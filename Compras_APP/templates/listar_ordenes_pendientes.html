@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Órdenes de Compra Pendientes de Recepción</h2>
+    <!-- ST-6.3 Mostrar órdenes pendientes -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Proveedor</th>
+                <th>Fecha</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for orden in ordenes %}
+            <tr>
+                <td>{{ orden.codigo }}</td>
+                <td>{{ orden.cotizacion.proveedor.nombre }}</td>
+                <td>{{ orden.fecha_generacion|date:"d/m/Y" }}</td>
+                <td>
+                    <a href="{% url 'registrar_recepcion' orden.pk %}" class="btn btn-primary btn-sm">Registrar Recepción</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="text-center">No hay órdenes pendientes de recepción.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
