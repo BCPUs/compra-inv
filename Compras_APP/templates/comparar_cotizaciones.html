@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Comparativa de Cotizaciones: {{ solicitud_cotizacion.solicitud_compra.codigo }}</h2>
+    <!-- ST-5.1 Crear tabla comparativa de cotizaciones -->
+    <table class="table table-bordered">
+        <thead>
+            <tr class="table-dark">
+                <th>Proveedor</th>
+                <th>Precio Unitario</th>
+                <th>Costo Total Estimado</th>
+                <th>Entrega (días)</th>
+                <th>Vigencia (días)</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cotizacion in cotizaciones %}
+            <tr>
+                <td>{{ cotizacion.proveedor.nombre }}</td>
+                <td>${{ cotizacion.precio_unitario }}</td>
+                <td>
+                    {% with solicitud_cotizacion.solicitud_compra.items.all|first as item %}
+                        ${{ cotizacion.precio_unitario }}
+                        <!-- Simplified: showing per unit if multiple items not handled in view yet -->
+                    {% endwith %}
+                </td>
+                <td>{{ cotizacion.tiempo_entrega_dias }}</td>
+                <td>{{ cotizacion.vigencia_dias }}</td>
+                <td>
+                    <a href="{% url 'seleccionar_ganador' cotizacion.pk %}" class="btn btn-primary btn-sm">Seleccionar Ganadora</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'consultar_cotizaciones' solicitud_cotizacion.pk %}" class="btn btn-secondary">Volver</a>
+</div>
+{% endblock %}

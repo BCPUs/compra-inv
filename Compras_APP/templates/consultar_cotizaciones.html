@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Cotizaciones para: {{ solicitud_cotizacion.solicitud_compra.codigo }}</h2>
+    <a href="{% url 'registrar_cotizacion' solicitud_cotizacion.pk %}" class="btn btn-success mb-3">Registrar Nueva Cotización</a>
+    <a href="{% url 'comparar_cotizaciones' solicitud_cotizacion.pk %}" class="btn btn-primary mb-3">Comparar Cotizaciones</a>
+    <a href="{% url 'listar_solicitudes' %}" class="btn btn-secondary mb-3">Volver</a>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Proveedor</th>
+                <th>Precio Unitario</th>
+                <th>Entrega (días)</th>
+                <th>Vigencia (días)</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cotizacion in cotizaciones %}
+            <tr>
+                <td>{{ cotizacion.proveedor.nombre }}</td>
+                <td>{{ cotizacion.precio_unitario }}</td>
+                <td>{{ cotizacion.tiempo_entrega_dias }}</td>
+                <td>{{ cotizacion.vigencia_dias }}</td>
+                <td>{{ cotizacion.estado }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center">No hay cotizaciones registradas.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

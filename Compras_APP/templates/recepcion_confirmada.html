@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="alert alert-success">
+        <h2>Recepción Registrada con Éxito</h2>
+    </div>
+
+    {% if diferencia %}
+        <div class="alert alert-warning">
+            <strong>Atención:</strong> Se han detectado diferencias entre las cantidades solicitadas y las recibidas.
+        </div>
+    {% endif %}
+
+    <p>La orden <strong>{{ recepcion.orden_compra.codigo }}</strong> ha sido marcada como recibida y el inventario ha sido notificado.</p>
+
+    <a href="{% url 'listar_ordenes_pendientes' %}" class="btn btn-primary">Volver a Pendientes</a>
+</div>
+{% endblock %}

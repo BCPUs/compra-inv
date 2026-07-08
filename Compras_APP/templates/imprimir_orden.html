@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Orden de Compra {{ orden.codigo }}</title>
+    <style>
+        body { font-family: sans-serif; }
+        .header { text-align: center; margin-bottom: 30px; }
+        .details { margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+        .total { text-align: right; font-weight: bold; font-size: 1.2em; }
+        @media print {
+            .no-print { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="no-print" style="background: #eee; padding: 10px; margin-bottom: 20px;">
+        <button onclick="window.print()">Imprimir Orden</button>
+        <a href="{% url 'exportar_pdf_orden' orden.pk %}">Descargar PDF</a>
+        <a href="{% url 'listar_ordenes' %}">Volver</a>
+    </div>
+
+    <div class="header">
+        <h1>ORDEN DE COMPRA</h1>
+        <h2>{{ orden.codigo }}</h2>
+    </div>
+
+    <div class="details">
+        <p><strong>Proveedor:</strong> {{ orden.cotizacion.proveedor.nombre }}</p>
+        <p><strong>RUC:</strong> {{ orden.cotizacion.proveedor.ruc }}</p>
+        <p><strong>Fecha de Emisión:</strong> {{ orden.fecha_generacion|date:"d/m/Y" }}</p>
+        <p><strong>Referencia Solicitud:</strong> {{ orden.cotizacion.solicitud_cotizacion.solicitud_compra.codigo }}</p>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Unidad</th>
+                <th>Precio Unitario</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in orden.cotizacion.solicitud_cotizacion.solicitud_compra.items.all %}
+            <tr>
+                <td>{{ item.producto }}</td>
+                <td>{{ item.cantidad }}</td>
+                <td>{{ item.unidad_medida }}</td>
+                <td>${{ orden.cotizacion.precio_unitario }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="total">
+        <p>COSTO TOTAL: ${{ orden.costo_total }}</p>
+    </div>
+</body>
+</html>
